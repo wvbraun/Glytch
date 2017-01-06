@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { Button, Nav, NavItem } from "react-bootstrap";
 import Dropzone from "react-dropzone";
 
-const GlytchHeader = () => {
+const GlytchHeader = ({ onDrop }) => {
   return (
     <div className="fixed-elements">
       <header id="glytch-header">
@@ -13,9 +13,10 @@ const GlytchHeader = () => {
             <div className="nav-action">
               <Button type="submit" bsStyle="primary" bsSize="small">
                 <Dropzone
-                  className="dropzone"
                   accept="image/*"
-                  multiple={false}>
+                  className="dropzone"
+                  multiple={false}
+                  onDrop={onDrop}>
                   Upload
                 </Dropzone>
               </Button>
@@ -26,5 +27,9 @@ const GlytchHeader = () => {
     </div>
   );
 };
+
+GlytchHeader.PropTypes = {
+  onDrop: PropTypes.func.isRequired
+}
 
 export default GlytchHeader;

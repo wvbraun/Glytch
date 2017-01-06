@@ -4,7 +4,7 @@ import NumericInput from "react-numeric-input";
 import TextInput from "../common/TextInput";
 
 const title = (
-  <h3 className="center">FX</h3>
+  <h3 className="center">Effects</h3>
 );
 
 class GlytchEffectsPanel extends React.Component {
@@ -44,24 +44,6 @@ class GlytchEffectsPanel extends React.Component {
     return (
       <Panel header={title}>
         <ListGroup fill>
-          <div className="dryft">
-            <ListGroupItem>
-              <Panel header="Dryft">
-                <div className="center">
-                  <Button type="submit" bsStyle="primary" bsSize="small">
-                    Start
-                  </Button>
-              </div>
-              </Panel>
-            </ListGroupItem>
-          </div>
-        </ListGroup>
-      </Panel>
-    );
-  }
-}
-
-/*
           <div className="canvas-effects">
             <ListGroupItem>
               <form>
@@ -126,7 +108,25 @@ class GlytchEffectsPanel extends React.Component {
                 </Button>
               </div>
             </ListGroupItem>
-*/
+          <div className="dryft">
+            <ListGroupItem>
+              <Panel header="Dryft">
+                <div className="center">
+                  <Button type="submit" bsStyle="primary" bsSize="small">
+                    Start
+                  </Button>
+              </div>
+              </Panel>
+            </ListGroupItem>
+          </div>
+        </ListGroup>
+      </Panel>
+    );
+  }
+}
+
+/*
+          */
 
 
 export default GlytchEffectsPanel;

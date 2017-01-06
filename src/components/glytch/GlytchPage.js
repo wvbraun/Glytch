@@ -10,22 +10,30 @@ class GlytchPage extends React.Component {
     super(props, context);
 
     this.selectImage = this.selectImage.bind(this);
+    this.addImage = this.addImage.bind(this);
   }
 
   selectImage(event) {
     event.preventDefault();
+    debugger;
     const image = {
-      name: event.target.alt,
-      url: event.target.src
+      alt: event.target.alt,
+      src: event.target.src
     };
     this.props.actions.selectImage(image);
+  }
+
+  addImage(event) {
+    this.props.actions.addImage(event[0]);
   }
 
   render() {
     const { images, currentImage } = this.props;
     return (
       <div>
-        <GlytchHeader />
+        <GlytchHeader
+          onDrop={this.addImage}
+        />
         <GlytchContainer
           images={images}
           currentImage={currentImage}

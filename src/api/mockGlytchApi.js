@@ -3,12 +3,12 @@ const delay = 1000;
 
 const images = [
   {
-    name: "nostalgia-smeared",
-    url: "http://localhost:3000/img/nostalgia-smeared.jpg"
+    alt: "nostalgia-smeared.jpg",
+    src: "http://localhost:3000/img/nostalgia-smeared.jpg"
   },
   {
-    name: "bamboo",
-    url: "http://localhost:3000/img/bamboo.png"
+    alt: "bamboo.png",
+    src: "http://localhost:3000/img/bamboo.png"
   }
 ];
 
@@ -17,20 +17,26 @@ class MockGlytchApi {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const _images = Object.assign([], images);
-        resolve(Object.assign({},
-          { images: _images,
-            image: _images[0]
-          })
-        );
+        resolve(Object.assign({}, {
+          images: _images,
+          image: _images[0]
+        }));
       }, delay);
     });
   }
 
-  static uploadImage(image) {
-    image = Object.assign({}, image);
+  static addImage(image) {
+    // image = Object.assign({}, image);
+    const reader = new FileReader();
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        images.push(image);
+        let img = { alt: image.name };
+        reader.onload = (event) => {
+          img.src = reader.result;
+          images.push(img);
+          resolve(Object.assign({}, img));
+        }
+        reader.readAsDataURL(image)
       }, delay);
     });
   }

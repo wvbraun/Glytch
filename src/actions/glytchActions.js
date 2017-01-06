@@ -10,12 +10,12 @@ export function loadImagesSuccess(images) {
   return { type: types.LOAD_IMAGES_SUCCESS, images };
 }
 
-export function uploadError(message) {
-  return { type: types.UPLOAD_IMAGE_FAIL, message };
+export function addImageError(message) {
+  return { type: types.ADD_IMAGE_FAIL, message };
 }
 
-export function uploadImageSuccess(image) {
-  return { type: types.UPLOAD_IMAGE_SUCCESS, image };
+export function addImageSuccess(image) {
+  return { type: types.ADD_IMAGE_SUCCESS, image };
 }
 
 export function selectImageSuccess(image) {
@@ -35,11 +35,11 @@ export function loadImages() {
   };
 }
 
-export function uploadImage(image) {
+export function addImage(image) {
   return (dispatch) => {
-    return GlytchApi.uploadImage(image)
+    return GlytchApi.addImage(image)
       .then((image) => {
-        dispatch(uploadImageSuccess(image));
+        dispatch(addImageSuccess(image));
       })
       .catch((error) => {
         throw(error);

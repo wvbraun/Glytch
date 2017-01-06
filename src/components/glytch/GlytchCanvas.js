@@ -3,7 +3,11 @@ import { Image } from "react-bootstrap";
 
 const GlytchCanvas = ({ image }) => {
   return (
-    <Image src={image.url} alt={image.name} rounded responsive />
+    <Image
+      src={image.src}
+      alt={image.alt}
+      rounded responsive
+    />
   );
 };
 

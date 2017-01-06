@@ -13,13 +13,13 @@ export default function glytchReducer(state = initialState.glytch, action) {
         currentImage: action.image
       });
 
-    case types.UPLOAD_IMAGE_SUCCESS:
-      return Object.assign({}, state,
-        { images: [
+    case types.ADD_IMAGE_SUCCESS:
+      return Object.assign({}, state, {
+        images: [
           ...state.images,
           Object.assign({}, action.image)
-          ]
-        });
+        ]
+      });
 
 
 /*
