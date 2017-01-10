@@ -2,6 +2,14 @@ import types from "./actionTypes";
 //import GlytchApi from "../api/glytchApi";
 import GlytchApi from "../api/mockGlytchApi";
 
+export function invertImageFail() {
+  return { type: types.INVERT_IMAGE_FAIL };
+}
+
+export function invertImageSuccess() {
+  return { type: types.INVERT_IMAGE_SUCCESS };
+}
+
 export function loadImagesError(message) {
   return { type: types.LOAD_IMAGES_FAIL, message };
 }

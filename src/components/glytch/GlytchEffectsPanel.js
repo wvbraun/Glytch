@@ -1,11 +1,25 @@
 import React, { PropTypes } from "react";
-import { Button, ListGroup, ListGroupItem, Panel } from "react-bootstrap";
+import {
+  Button,
+  Checkbox,
+  ControlLabel,
+  FormGroup,
+  ListGroup,
+  ListGroupItem,
+  Panel,
+  Radio,
+} from "react-bootstrap";
 import NumericInput from "react-numeric-input";
 import TextInput from "../common/TextInput";
 
 const title = (
   <h3 className="center">Effects</h3>
 );
+
+const labelStyle = {
+  display: "block",
+  textAlign: "center",
+};
 
 class GlytchEffectsPanel extends React.Component {
   constructor(props, context) {
@@ -23,8 +37,13 @@ class GlytchEffectsPanel extends React.Component {
       }
     };
 
+    this.applyGlytchEffects = this.applyGlytchEffects.bind(this);
     this.updateCanvasState = this.updateCanvasState.bind(this);
     this.updateLayerState = this.updateLayerState.bind(this);
+  }
+
+  componentDidMount() {
+    // this.registerCustomFilters();
   }
 
   updateCanvasState(event) {
@@ -39,12 +58,48 @@ class GlytchEffectsPanel extends React.Component {
     return this.setState({ layer: layer });
   }
 
+  applyGlytchEffects() {
+
+  }
+
+/*
+  registerCustomFilters() {
+    Caman.Filter.register("invertColor", function(adjust) {
+
+    });
+  }
+  */
+
   // TODO: replace TextInput with NumberInput for the width/height
   render() {
     return (
       <Panel header={title}>
         <ListGroup fill>
-          <div className="canvas-effects">
+          <form>
+            <Panel header="Glytch Effects">
+              <div className="list-group center">
+                <ControlLabel style={labelStyle}>Invert</ControlLabel>
+                <Checkbox inline>Red</Checkbox>
+                <Checkbox inline>Green</Checkbox>
+                <Checkbox inline>Blue</Checkbox>
+              </div>
+            </Panel>
+            <Button
+              bsStyle="primary"
+              bsSize="small"
+            >
+              Apply
+            </Button>
+          </form>
+        </ListGroup>
+      </Panel>
+    );
+  }
+}
+
+/*
+
+<div className="canvas-effects">
             <ListGroupItem>
               <form>
                 <Panel header="Canvas">
@@ -119,14 +174,7 @@ class GlytchEffectsPanel extends React.Component {
               </Panel>
             </ListGroupItem>
           </div>
-        </ListGroup>
-      </Panel>
-    );
-  }
-}
-
-/*
-          */
+*/
 
 
 export default GlytchEffectsPanel;

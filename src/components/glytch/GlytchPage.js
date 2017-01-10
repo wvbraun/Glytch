@@ -15,7 +15,6 @@ class GlytchPage extends React.Component {
 
   selectImage(event) {
     event.preventDefault();
-    debugger;
     const image = {
       alt: event.target.alt,
       src: event.target.src
@@ -23,8 +22,9 @@ class GlytchPage extends React.Component {
     this.props.actions.selectImage(image);
   }
 
-  addImage(event) {
-    this.props.actions.addImage(event[0]);
+  addImage(images) {
+    let img = images[0]
+    this.props.actions.addImage(img);
   }
 
   render() {
