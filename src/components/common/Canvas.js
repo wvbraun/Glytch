@@ -1,25 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from "react";
 
-class Canvas extends Component {
-	constructor(props, context) {
-		super(props, context);
-	}
+const canvasStyles = {
+	margin: "auto",
+	position: "absolute",
+};
 
-	render() {
-		const canvasStyles = {
-			margin: 'auto',
-			position:'absolute',
-			left:0,
-			right:0
-		}
-
-		return (
-			<div className="col-md-9" ref="canvasWrapper" id="canvas-wrapper">
-				<div id="canvas-inner">
-					<canvas ref="canvas" id="canvas" style={canvasStyles}></canvas>
-				</div>
+const Canvas = ({}) => {
+	return (
+		<div className="col-md-9" ref="canvasWrapper" id="canvas-wrapper">
+			<div id="canvas-inner">
+				<canvas ref="canvas" id="canvas" style={canvasStyles}></canvas>
 			</div>
-		);
-	}
+		</div>
+	);
 }

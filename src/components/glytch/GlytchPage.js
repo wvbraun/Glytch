@@ -23,6 +23,9 @@ class GlytchPage extends React.Component {
   }
 
   addImage(images) {
+    if (images.length < 1) {
+      return;
+    }
     let img = images[0]
     this.props.actions.addImage(img);
   }

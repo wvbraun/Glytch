@@ -21,6 +21,8 @@ const labelStyle = {
   textAlign: "center",
 };
 
+const canvas = "#glytch-canvas"
+
 class GlytchEffectsPanel extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -40,6 +42,7 @@ class GlytchEffectsPanel extends React.Component {
     this.applyGlytchEffects = this.applyGlytchEffects.bind(this);
     this.updateCanvasState = this.updateCanvasState.bind(this);
     this.updateLayerState = this.updateLayerState.bind(this);
+    this.invertImage = this.invertImage.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +59,14 @@ class GlytchEffectsPanel extends React.Component {
     let layer = this.state.layer;
     layer[event.target.name] = event.target.value;
     return this.setState({ layer: layer });
+  }
+
+  invertImage() {
+    /*
+    Caman(canvas, () => {
+      this.invert().render();
+    });
+    */
   }
 
   applyGlytchEffects() {
@@ -78,7 +89,18 @@ class GlytchEffectsPanel extends React.Component {
           <form>
             <Panel header="Glytch Effects">
               <div className="list-group center">
+                <form>
+                  <label>Invert</label>
+                </form>
                 <ControlLabel style={labelStyle}>Invert</ControlLabel>
+                <Button
+                  bsStyle="primary"
+                  bsSize="xsmall"
+                  onClick={this.invertImage}
+                >
+                  Invert
+                </Button>
+
                 <Checkbox inline>Red</Checkbox>
                 <Checkbox inline>Green</Checkbox>
                 <Checkbox inline>Blue</Checkbox>
