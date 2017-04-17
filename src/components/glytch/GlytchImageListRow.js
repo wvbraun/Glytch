@@ -8,10 +8,11 @@ const GlytchImageListRow = ({ image, isCurrentImage, onSelectImage }) => {
   const imgStyle = "img img-responsive img-rounded glytch-image-row" + (isCurrentImage ? " selected" : "");
   return (
     <ListGroupItem onClick={onSelectImage}>
-      <img
+      <Image
         src={image.src}
-        alt={image.alt} 
+        alt={image.alt}
         className={imgStyle}
+        crossOrigin
       />
     </ListGroupItem>
   );

@@ -4,34 +4,83 @@ import GlytchCanvas from "./GlytchCanvas";
 import GlytchImageListPanel from "./GlytchImageListPanel";
 import GlytchEffectsPanel from "./GlytchEffectsPanel";
 
+const percentagePrint = v => (v * 100).toFixed(0) + "%";
+const radiantPrint = r => (180 * r / Math.PI).toFixed(0) + "°";
 
-const GlytchContainer = ({ images, currentImage, onSelectImage }) => {
-  return (
-    <Grid fluid>
-      <Row>
-        <div className="glytch-image-list">
-          <Col xs={3}>
-            <GlytchImageListPanel
-              images={images}
-              currentImage={currentImage}
-              onSelectImage={onSelectImage}
-            />
-          </Col>
-        </div>
-        <div className="glytch-canvas">
-          <Col xs={6}>
-            {currentImage && <GlytchCanvas image={currentImage}/>}
-          </Col>
-        </div>
-        <div className="glytch-effects">
-          <Col xs={3}>
-            <GlytchEffectsPanel />
-          </Col>
-        </div>
-      </Row>
-    </Grid>
-  );
+const initialEffects = {
+  blur: 0,
+  saturation: 1,
+  contrast: 1,
+  brightness: 1,
+  negative: 0,
+  hue: 0,
+  sepia: 0,
 };
+
+const fields = [
+  { id: "blur", label: "Blur", min: 0, max: 6, step: 0.1, prettyPrint: blur => blur.toFixed(1) },
+  { id: "contrast", label: "Contrast", min: 0, max: 4, step: 0.1, prettyPrint: percentagePrint },
+  { id: "brightness", label: "Brightness", min: 0, max: 4, step: 0.1, prettyPrint: percentagePrint },
+  { id: "saturation", label: "Saturation", min: 0, max: 10, step: 0.1, prettyPrint: percentagePrint },
+  { id: "hue", label: "HueRotate", min: 0, max: 2 * Math.PI, step: 0.1, prettyPrint: radiantPrint },
+  { id: "negative", label: "Negative", min: 0, max: 1, step: 0.05, prettyPrint: percentagePrint },
+  { id: "sepia", label: "Sepia", min: 0, max: 1, step: 0.05, prettyPrint: percentagePrint },
+];
+
+class GlytchContainer extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      ...initialEffects,
+    };
+
+    this.updateValue = this.updateValue.bind(this);
+    this.resetValue = this.resetValue.bind(this);
+  }
+
+  updateValue(id, value) {
+    this.setState({ [id]: value });
+  }
+
+  resetValue(id) {
+    this.setState({ [id]: initialEffects[id] });
+  }
+
+  render() {
+    const { ...effects } = this.state;
+    const { images, currentImage, onSelectImage } = this.props;
+    return (
+      <Grid fluid>
+        <Row>
+          <div className="glytch-image-list">
+            <Col xs={3}>
+              <GlytchImageListPanel
+                images={images}
+                currentImage={currentImage}
+                onSelectImage={onSelectImage}
+              />
+            </Col>
+          </div>
+          <div className="glytch-canvas">
+            <Col xs={6}>
+              {currentImage && <GlytchCanvas ref="canvas" onLoad={onSelectImage} effects={effects} image={currentImage}/>}
+            </Col>
+          </div>
+          <div className="glytch-effects">
+            <Col xs={3}>
+              <GlytchEffectsPanel
+                fields={fields}
+                effects={effects}
+                updateValue={this.updateValue}
+                resetValue={this.resetValue}
+              />
+            </Col>
+          </div>
+        </Row>
+      </Grid>
+    );
+  }
+}
 
 GlytchContainer.propTypes = {
   images: PropTypes.array.isRequired,

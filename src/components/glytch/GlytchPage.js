@@ -13,11 +13,11 @@ class GlytchPage extends React.Component {
     this.addImage = this.addImage.bind(this);
   }
 
-  selectImage(event) {
+  selectImage(e) {
     event.preventDefault();
     const image = {
-      alt: event.target.alt,
-      src: event.target.src
+      alt: e.target.alt,
+      src: e.target.src
     };
     this.props.actions.selectImage(image);
   }

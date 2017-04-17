@@ -9,8 +9,7 @@ import {
   Panel,
   Radio,
 } from "react-bootstrap";
-import NumericInput from "react-numeric-input";
-import TextInput from "../common/TextInput";
+import SliderInput from "../common/SliderInput";
 
 const title = (
   <h3 className="center">Effects</h3>
@@ -21,44 +20,51 @@ const labelStyle = {
   textAlign: "center",
 };
 
+const initialValues = {
+  blur: 0,
+  saturation: 1,
+  contrast: 1,
+  brightness: 1,
+  negative: 0,
+  hue: 0,
+  sepia: 0,
+};
+
+const fields = [
+  { id: "blur", label: "Blur", min: 0, max: 6, step: 0.1, prettyPrint: blur => blur.toFixed(1) },
+  { id: "contrast", label: "Contrast", min: 0, max: 4, step: 0.1, prettyPrint: percentagePrint },
+  { id: "brightness", label: "Brightness", min: 0, max: 4, step: 0.1, prettyPrint: percentagePrint },
+  { id: "saturation", label: "Saturation", min: 0, max: 10, step: 0.1, prettyPrint: percentagePrint },
+  { id: "hue", label: "HueRotate", min: 0, max: 2 * Math.PI, step: 0.1, prettyPrint: radiantPrint },
+  { id: "negative", label: "Negative", min: 0, max: 1, step: 0.05, prettyPrint: percentagePrint },
+  { id: "sepia", label: "Sepia", min: 0, max: 1, step: 0.05, prettyPrint: percentagePrint },
+]
+
+const percentagePrint = v => (v * 100).toFixed(0) + "%";
+const radiantPrint = r => (180 * r / Math.PI).toFixed(0) + "°";
+
 const canvas = "#glytch-canvas"
 
+      // values: Object.assign({}, this.props.values),
 class GlytchEffectsPanel extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      canvas: {
-        width: "",
-        height: ""
-      },
-      layer: {
-        width: "",
-        height: "",
-        pixelCount: "",
-        startPosition: ""
-      }
+      effects: Object.assign({}, this.props.effects)
     };
 
     this.applyGlytchEffects = this.applyGlytchEffects.bind(this);
-    this.updateCanvasState = this.updateCanvasState.bind(this);
-    this.updateLayerState = this.updateLayerState.bind(this);
     this.invertImage = this.invertImage.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      effects: Object.assign({}, nextProps.effects)
+    });
   }
 
   componentDidMount() {
     // this.registerCustomFilters();
-  }
-
-  updateCanvasState(event) {
-    let canvas = this.state.canvas;
-    canvas[event.target.name] = event.target.value;
-    return this.setState({ canvas: canvas });
-  }
-
-  updateLayerState(event) {
-    let layer = this.state.layer;
-    layer[event.target.name] = event.target.value;
-    return this.setState({ layer: layer });
   }
 
   invertImage() {
@@ -79,124 +85,44 @@ class GlytchEffectsPanel extends React.Component {
 
     });
   }
+  //updateValue(id, value)}
+                <SliderInput
+                {...props}
+                name={id}
+                value={values[id]}
+                onChange={value => this.setState({ [id]: value })}
+                onReset={() => this.setState({ [id]: initialValues[id] })}
+              />
   */
 
-  // TODO: replace TextInput with NumberInput for the width/height
   render() {
+    const { fields, updateValue, resetValue } = this.props;
     return (
       <Panel header={title}>
         <ListGroup fill>
-          <form>
-            <Panel header="Glytch Effects">
-              <div className="list-group center">
-                <form>
-                  <label>Invert</label>
-                </form>
-                <ControlLabel style={labelStyle}>Invert</ControlLabel>
-                <Button
-                  bsStyle="primary"
-                  bsSize="xsmall"
-                  onClick={this.invertImage}
-                >
-                  Invert
-                </Button>
-
-                <Checkbox inline>Red</Checkbox>
-                <Checkbox inline>Green</Checkbox>
-                <Checkbox inline>Blue</Checkbox>
-              </div>
-            </Panel>
-            <Button
-              bsStyle="primary"
-              bsSize="small"
-            >
-              Apply
-            </Button>
-          </form>
+          {fields.map(({ id, ...props }) =>
+            <ListGroupItem key={id}>
+              <SliderInput
+                {...props}
+                name={id}
+                value={this.state.effects[id]}
+                onChange={value => updateValue(id, value)}
+                onReset={() => resetValue(id)}
+              />
+          </ListGroupItem>
+        )}
         </ListGroup>
       </Panel>
     );
   }
 }
 
-/*
-
-<div className="canvas-effects">
-            <ListGroupItem>
-              <form>
-                <Panel header="Canvas">
-                  <TextInput
-                    name="width"
-                    label="Width"
-                    value={this.state.canvas.width}
-                    onChange={this.updateCanvasState}
-                  />
-
-                  <TextInput
-                    name="height"
-                    label="Height"
-                    value={this.state.canvas.height}
-                    onChange={this.updateCanvasState}
-                  />
-                </Panel>
-              </form>
-            </ListGroupItem>
-          </div>
-          <div className="layer-properties">
-            <ListGroupItem>
-              <form>
-                <Panel header="Layer">
-                  <TextInput
-                    name="width"
-                    label="Width"
-                    value={this.state.layer.width}
-                    onChange={this.updateLayerState}
-                  />
-
-                  <TextInput
-                    name="height"
-                    label="Height"
-                    value={this.state.layer.height}
-                    onChange={this.updateLayerState}
-                  />
-
-                  <TextInput
-                    name="pixelCount"
-                    label="Pixel Count"
-                    value={this.state.layer.pixelCount}
-                    onChange={this.updateLayerState}
-                  />
-
-                  <TextInput
-                    name="startPosition"
-                    label="Start Position"
-                    value={this.state.layer.startPosition}
-                    onChange={this.updateLayerState}
-                  />
-                </Panel>
-              </form>
-            </ListGroupItem>
-            </div>
-
-            <ListGroupItem>
-              <div className="center">
-                <Button type="submit" bsStyle="primary" bsSize="small">
-                  Apply
-                </Button>
-              </div>
-            </ListGroupItem>
-          <div className="dryft">
-            <ListGroupItem>
-              <Panel header="Dryft">
-                <div className="center">
-                  <Button type="submit" bsStyle="primary" bsSize="small">
-                    Start
-                  </Button>
-              </div>
-              </Panel>
-            </ListGroupItem>
-          </div>
-*/
+GlytchEffectsPanel.propTypes = {
+  fields: PropTypes.array.isRequired,
+  effects: PropTypes.object.isRequired,
+  updateValue: PropTypes.func.isRequired,
+  resetValue: PropTypes.func.isRequired,
+};
 
 
 export default GlytchEffectsPanel;
