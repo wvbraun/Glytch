@@ -31,23 +31,34 @@ class GlytchContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      ...initialEffects,
+      effects: Object.assign({}, initialEffects),
     };
 
     this.updateValue = this.updateValue.bind(this);
     this.resetValue = this.resetValue.bind(this);
   }
 
+// let effects = Object.assign({}, this.state.effects);
+// this.setState({
+//  effects: { ...effects, [id]: value }
+// })
   updateValue(id, value) {
-    this.setState({ [id]: value });
+    this.setState({
+      effects: Object.assign({}, this.state.effects, {
+        [id]: value
+      })
+    });
   }
 
   resetValue(id) {
-    this.setState({ [id]: initialEffects[id] });
+    this.setState({
+      effects: Object.assign({}, this.state.effects, {
+        [id]: initialEffects[id]
+      })
+    });
   }
 
   render() {
-    const { ...effects } = this.state;
     const { images, currentImage, onSelectImage } = this.props;
     return (
       <Grid fluid>
@@ -63,14 +74,14 @@ class GlytchContainer extends React.Component {
           </div>
           <div className="glytch-canvas">
             <Col xs={6}>
-              {currentImage && <GlytchCanvas ref="canvas" onLoad={onSelectImage} effects={effects} image={currentImage}/>}
+              {currentImage && <GlytchCanvas ref="canvas" onLoad={onSelectImage} effects={this.state.effects} image={currentImage}/>}
             </Col>
           </div>
           <div className="glytch-effects">
             <Col xs={3}>
               <GlytchEffectsPanel
                 fields={fields}
-                effects={effects}
+                effects={this.state.effects}
                 updateValue={this.updateValue}
                 resetValue={this.resetValue}
               />
