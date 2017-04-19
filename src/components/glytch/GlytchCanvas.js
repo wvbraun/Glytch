@@ -10,20 +10,10 @@ const height = 500;
 class GlytchCanvas extends React.Component {
   constructor(props, context) {
     super(props, context)
-    this.onLoad = this.onLoad.bind(this);
-  }
-
-  onLoad(e) {
-    e.preventDefault();
-    const image = {
-      src: e.target.src,
-      alt: e.target.alt,
-    };
-    this.props.selectImage(image);
   }
 
   render() {
-    const { image, effects, onSelectImage } = this.props;
+    const { image, effects, onLoad } = this.props;
     return (
       <div>
         <Surface ref="surface" width={width} height={height}>
@@ -31,7 +21,7 @@ class GlytchCanvas extends React.Component {
             <GlytchCanvasImage
               key={image.src}
               image={image}
-              onLoad={this.onLoad}
+              onLoad={onLoad}
             />
           </GlytchEffects>
       </Surface>
@@ -43,7 +33,7 @@ class GlytchCanvas extends React.Component {
 GlytchCanvas.propTypes = {
   image: PropTypes.object.isRequired,
   effects: PropTypes.object.isRequired,
-  selectImage: PropTypes.func.isRequired,
+  onLoad: PropTypes.func.isRequired,
 };
 
 export default GlytchCanvas;

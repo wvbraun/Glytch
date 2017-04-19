@@ -7,7 +7,7 @@ const title = (
   <h3 className="center">Images</h3>
 );
 
-const GlytchImageListPanel = ({ images, currentImage, selectImage }) => {
+const GlytchImageListPanel = ({ images, currentImage, onSelectImage }) => {
   return (
     <Panel header={title}>
       <ListGroup fill>
@@ -18,7 +18,7 @@ const GlytchImageListPanel = ({ images, currentImage, selectImage }) => {
               key={i}
               image={image}
               isCurrentImage={isCurrentImage}
-              selectImage={selectImage}
+              onSelectImage={onSelectImage}
             />
           );
         })}
@@ -30,7 +30,7 @@ const GlytchImageListPanel = ({ images, currentImage, selectImage }) => {
 GlytchImageListPanel.propTypes = {
   images: PropTypes.array.isRequired,
   currentImage: PropTypes.object,
-  selectImage: PropTypes.func.isRequired
+  onSelectImage: PropTypes.func.isRequired
 };
 
 export default GlytchImageListPanel;

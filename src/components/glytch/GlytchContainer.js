@@ -59,7 +59,7 @@ class GlytchContainer extends React.Component {
   }
 
   render() {
-    const { images, currentImage, selectImage } = this.props;
+    const { images, currentImage, onSelectImage } = this.props;
     return (
       <Grid fluid>
         <Row>
@@ -68,18 +68,13 @@ class GlytchContainer extends React.Component {
               <GlytchImageListPanel
                 images={images}
                 currentImage={currentImage}
-                selectImage={selectImage}
+                onSelectImage={onSelectImage}
               />
             </Col>
           </div>
           <div className="glytch-canvas">
             <Col xs={6}>
-              {currentImage &&
-                <GlytchCanvas
-                  ref="canvas"
-                  selectImage={selectImage}
-                  effects={this.state.effects}
-                  image={currentImage}/>}
+              {currentImage && <GlytchCanvas ref="canvas" onLoad={onSelectImage} effects={this.state.effects} image={currentImage}/>}
             </Col>
           </div>
           <div className="glytch-effects">
@@ -101,7 +96,7 @@ class GlytchContainer extends React.Component {
 GlytchContainer.propTypes = {
   images: PropTypes.array.isRequired,
   currentImage: PropTypes.object,
-  selectImage: PropTypes.func.isRequired
+  onSelectImage: PropTypes.func.isRequired
 };
 
 export default GlytchContainer;
