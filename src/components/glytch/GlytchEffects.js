@@ -1,5 +1,6 @@
 import React, {PropTypes} from "react";
 import GL from "gl-react";
+import { BitShift } from "../common/BitShift";
 import {Blur} from "gl-react-blur";
 import {ContrastSaturationBrightness} from "gl-react-contrast-saturation-brightness";
 import {Negative} from "gl-react-negative";
@@ -27,6 +28,7 @@ const GlytchEffects = GL.createComponent(
     children,
     width,
     height,
+    bitshift,
     blur,
     contrast,
     saturation,
@@ -47,7 +49,9 @@ const GlytchEffects = GL.createComponent(
                 factor={blur}
                 width={width}
                 height={height}>
-                {children}
+                <BitShift value={bitshift}>
+                  {children}
+                </BitShift>
               </Blur>
           </ContrastSaturationBrightness>
         </Negative>
@@ -59,6 +63,7 @@ GlytchEffects.propTypes = {
   children: PropTypes.node.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  bitshift: PropTypes.number.isRequired,
   blur: PropTypes.number.isRequired,
   contrast: PropTypes.number.isRequired,
   saturation: PropTypes.number.isRequired,

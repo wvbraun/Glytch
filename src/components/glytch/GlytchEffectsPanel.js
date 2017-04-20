@@ -21,9 +21,6 @@ const labelStyle = {
 };
 
 
-const percentagePrint = v => (v * 100).toFixed(0) + "%";
-const radiantPrint = r => (180 * r / Math.PI).toFixed(0) + "°";
-
 const canvas = "#glytch-canvas"
 
 class GlytchEffectsPanel extends React.Component {

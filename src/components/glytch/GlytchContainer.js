@@ -8,6 +8,7 @@ const percentagePrint = v => (v * 100).toFixed(0) + "%";
 const radiantPrint = r => (180 * r / Math.PI).toFixed(0) + "°";
 
 const initialEffects = {
+  bitshift: 0,
   blur: 0,
   saturation: 1,
   contrast: 1,
@@ -18,6 +19,7 @@ const initialEffects = {
 };
 
 const fields = [
+  { id: "bitshift", label: "BitShift", min: 0, max: 16, step: 1, prettyPrint: bitshift => bitshift.toFixed(1) },
   { id: "blur", label: "Blur", min: 0, max: 6, step: 0.1, prettyPrint: blur => blur.toFixed(1) },
   { id: "contrast", label: "Contrast", min: 0, max: 4, step: 0.1, prettyPrint: percentagePrint },
   { id: "brightness", label: "Brightness", min: 0, max: 4, step: 0.1, prettyPrint: percentagePrint },
